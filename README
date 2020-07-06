@@ -1,0 +1,120 @@
+Detailed criteria for your app (requirements list):
+
+1)It is a Node.js app - DONE
+
+2)There is a home page with links to all other pages - DONE ( File: main.js, line: 237 );
+
+3)There is a register page - DONE ( File: main.js, line: 241 );
+
+4)There is user authentication page (i.e. logins) - DONE ( File: main.js, line: 245);
+
+5)There is an add recipe page (available only to logged in users) for each recipe store at least three items: name of the recipe, text of the recipe and the name of the user who created/added the recipe. - DONE 
+	
+	The recipe page consists of input fields: Name, Content, Author. ( File:main.js, line: 197 )
+
+6)There is an update recipe page (available only to logged in users) - DONE.
+          
+           I completed this part using updateOne method. ( File: main.js, line: 160 );
+
+7)There is a delete recipe page (available only to logged in users) - DONE;
+
+	 I completed this part using deleteOne method. ( File: main.js, line: 141 );
+
+8)There is a list page, listing all recipes and the name of the user who added the recipe - DONE ( File: main.js, line: 180 );
+
+9)The forms have some validations - DONE ( File:main.js, line: 97 (checking for the ‘email’ input );
+
+10)There are useful feedback messages to the user - DONE ( when they enter data the server responses messages );
+
+11)It has a database backend that implements CRUD operations (the database can be MySQL or Mongodb) - DONE ( its a mongoDB server );
+
+12)The create & update operations take input data from a form or forms (available only to logged in users) - DONE;
+
+13)The login process uses sessions - DONE ( File: main.js, line: 8 );
+
+14)Passwords should be stored as hashed - DONE. ( File: main.js, line: 35 );
+
+15)There is a way to logout - DONE. ( File: main.js, line: 63 ); 
+
+16)There is a basic api i.e. recipes content can be accessed as json via http method, It should be clear how to access the api (this could include comments in code) - DONE. ( File: main.js, line: 218 );
+17)There are links on all pages to home page providing easy navigation for users - DONE ( All links are provided );
+
+
+
+I have chosen mongoDB for my database:
+
+MY DATA MODEL:
+
+                                                        |---USERSNAME
+                            |-----COLLECTION: USERS-----|
+                            |                           |---PASSWORD
+RECIPEBANKDATABASE ---------|
+                            |
+                            |-----COLLECTION: RECIPES---|---NAME
+                                                        |
+                                                        |---CONTENT
+                                                        |
+                                                        |---AUTHOR
+                                                        
+                                                        
+
+An API that implements CRUD ( MY RESEARCH ):
+
+I have done some research and discovered that for some reason PUT & DELETE methods are not part of HTML5 standard. I could not use to use these methods with functions like - ( findOneAnddelete ) in my main.js. 
+
+I have attempted to use FETCH API to be able to use  DELETE & PUT in the HTML forms. This is a workaround, this helps to override “METHOD”  in my html files to pass the information entered by the user into routers/main.js - ( app.delete / app.put ). 
+
+The code below is how I attempted to implement  Fetch API to DELETE some content. This code has not been added to my final web application.
+
+//==============================================================================
+
+ROUTES/MAIN.JS
+
+app.delete('/deletedrecipe', function(req, res) {
+  var MongoClient = require('mongodb').MongoClient;
+  var db = client.db ('recipebankdatabase');
+  MongoClient.connect(url, function(err, client) {
+    if (findErr) throw findErr;
+    db.collection('recipes').findOneAndDelete({name: req.body.keyword}, function(findErr, result) {
+      if (findErr) throw findErr;
+      else
+
+      res.send(result);
+      console.log('Item deleted');
+
+    });
+        client.close();
+  });
+});
+
+//==============================================================================
+
+
+VIEWS/DELETERECIPE.HTML
+
+<script>
+var del = document.getElementById('delete')
+
+del.addEventListener('click', function () {
+
+  fetch('recipes', {
+    method: 'delete',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+
+    body: JSON.stringify({
+    keyword: req.body.keyword
+
+    })
+  })
+  .then(res => {
+    if (res.ok) return res.json()
+  }).
+  then(data => {
+    console.log(data)
+    window.location.reload()
+  })
+})
+</script>
+

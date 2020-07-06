@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+  <head>
+    <title>List  webpage!</title>
+  </head>
+
+<div class="w3-top">
+          <div class="w3-row w3-large w3-light-grey">
+            <div class="w3-col s3">
+         <a href="./" class="w3-button w3-block">Home</a>
+            </div>
+
+
+    <h1> This is List Page </h1>
+          <body>
+            <h3>You can see names and prices of all available books at our book shop here:</h3>
+            <ul>
+              <% availablerecipes.forEach(function(recipes){ %>
+              <li><%= recipes.name %>, <%= recipes.content %>, <%= recipes.author %></li>
+             <% }) %>
+            </ul>
+  </body>
+
+
+</html>
+

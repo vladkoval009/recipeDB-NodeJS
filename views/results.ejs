@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+  <head>
+    <title>SEARCH RESULT!</title>
+  </head>
+    <h1> RESULT PAGE  </h1>
+          <body>
+            <ul>
+              <% availablerecipes.forEach(function(recipes){ %>
+              <li><%= recipes.name%>, <%= recipes.content %></li>
+             <% }) %>
+            </ul>
+
+  </body>
+
+<a href='./'>Home</a>
+
+</html>
